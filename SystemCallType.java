@@ -1,0 +1,6 @@
+package so;
+
+public enum SystemCallType {
+	OPEN_PROCESS, READ_PROCESS, CLOSE_PROCESS, WRITE_PROCESS
+
+}
