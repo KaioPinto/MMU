@@ -18,10 +18,10 @@ public class Process {
 	 * List<Process> processes;
 	 */
 
-	public Process(int tam) {
-		this.id = UUID.randomUUID().toString();
-		Random rand = new Random();
-		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 6, 10, 20, 30, 50, 100);
+	public Process(int tam, String id) {
+		this.id = id;
+		// Random rand = new Random();
+		// List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 6, 10, 20, 30, 50, 100);
 		// this.sizeInMemory = numbers.get(rand.nextInt(numbers.size()));
 		this.sizeInMemory = tam;
 

@@ -12,8 +12,9 @@ public class SystemOperation {
 
 	public static Process systemCall(SystemCallType type, Process p) {
 		if (type.equals(SystemCallType.OPEN_PROCESS)) {
+			System.out.println("Criando processo: " + p.getId());
 			if (mm == null) {
-				mm = new MemoryMannager(Strategy.WORST_FIT);
+				mm = new MemoryMannager(Strategy.BEST_FIT);
 			}
 			if (cm == null) {
 				cm = new CpuManager();

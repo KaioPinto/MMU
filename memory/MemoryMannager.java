@@ -30,12 +30,11 @@ public class MemoryMannager {
 	}
 
 	private void writeWithBestFit(Process p) {
+		System.out.println("Metodo: Best_Fit");
 
 		int bestSize = -1;
 		int actualSize = 0;
 		int actualBestSize = 0;
-		System.out.println("processo" + p.getSizeInMemory());
-
 		for (int i = 0; i < this.memoryPhysic.length; i++) {
 			if (this.memoryPhysic[i] == null) {
 				actualSize++;
@@ -70,24 +69,25 @@ public class MemoryMannager {
 		}
 		System.out.println();
 		if (bestSize == 0 || bestSize > 0) {
-			System.out.println("entreando");
+			System.out.println("Escrevendo processo com Best_Fit");
 			int start = bestSize;
 			int end = start + p.getSizeInMemory();
 			AdressMemory address = new AdressMemory(start, end);
 			for (int i = address.getStart(); i < address.getEnd(); i++) {
 				this.memoryPhysic[i] = p.getId();
-				System.out.println(i);
 			}
+
 		} else {
-			System.out.println("Não há espaço disponível");
+			System.out.println("NÃ£o hÃ¡ espaÃ§o disponÃ­vel");
 		}
+		printMemoryState();
 
 	}
 
 	private void writeWithWorstFit(Process p) {
+		System.out.println("Metodo: Worst_Fit");
 		int bigerSize = -1;
 		int actualSize = 0;
-		System.out.println("processo:" + p.getSizeInMemory());
 		for (int i = 0; i < memoryPhysic.length; i++) {
 			if (this.memoryPhysic[i] != null) {
 				if (actualSize > bigerSize && actualSize >= p.getSizeInMemory()) {
@@ -110,22 +110,23 @@ public class MemoryMannager {
 
 		}
 		if (bigerSize == 0 || bigerSize > 0) {
+			System.out.println("Escrevendo Processo com WorstFit");
 			int start = bigerSize;
 			int end = start + p.getSizeInMemory();
 			AdressMemory address = new AdressMemory(start, end);
 			for (int i = address.getStart(); i < address.getEnd(); i++) {
 				this.memoryPhysic[i] = p.getId();
-				System.out.println(i);
 			}
 
 		} else {
-			System.out.println("Não há espaço disponível");
+			System.out.println("NÃ£o hÃ¡ espaÃ§o disponÃ­vel");
 		}
+		printMemoryState();
 	}
 
 	private void writeWithFirstFit(Process p) {
+		System.out.println("Metodo: First_Fit");
 		int actualSize = 0;
-		System.out.println("Tamanho do processo: " + p.getSizeInMemory());
 		for (int i = 0; i < memoryPhysic.length; i++) {
 			if (this.memoryPhysic[i] == null) {
 				actualSize++;
@@ -133,11 +134,11 @@ public class MemoryMannager {
 					int start = (i - actualSize) + 1;
 					int end = i;
 					AdressMemory address = new AdressMemory(start, end);
-					System.out.println("Escrevendo na memoria");
+					System.out.println("Escrevendo processo com FirstFit");
 					for (int ind = address.getStart(); ind <= address.getEnd(); ind++) {
-						System.out.println(ind);
 						this.memoryPhysic[ind] = p.getId();
 					}
+					printMemoryState();
 					break;
 				}
 
@@ -146,28 +147,45 @@ public class MemoryMannager {
 			}
 		}
 		if (actualSize < p.getSizeInMemory()) {
-			System.out.println("Não há espaço");
+			System.out.println("NÃ£o hÃ¡ espaÃ§o");
 		}
+		printMemoryState();
 	}
 
-	private void printMemoryStatus() {
-		for (int i = 0; i < memoryPhysic.length; i++) {
-			System.out.print(memoryPhysic[i] + " | ");
-		}
+	private void printMemoryState() {
+		System.out.println("|-----------------------------------------------|");
+		System.out.println("|            Estado atual da memÃ³ria            |");
+		System.out.println("|-----------------------------------------------|");
 
+		for (int i = 0; i < memoryPhysic.length; i++) {
+			if (memoryPhysic[i] != null) {
+				System.out.print(memoryPhysic[i] + "|");
+
+			} else {
+				System.out.print("  " + "|");
+
+			}
+			if ((i + 1) % 16 == 0) {
+				System.out.println();
+
+			}
+		}
+		System.out.println();
 	}
 
 	public void delete(Process p) {
-		System.out.println("Excluidno processos:");
+		System.out.println("Excluidno processos: " + p.getId());
 
 		for (int i = 0; i < this.memoryPhysic.length; i++) {
 			if (this.memoryPhysic[i] == p.getId()) {
-				System.out.println(i);
 				this.memoryPhysic[i] = null;
 
-			} else {
+			}
+
+			else {
 			}
 		}
+		printMemoryState();
 
 	}
 }
